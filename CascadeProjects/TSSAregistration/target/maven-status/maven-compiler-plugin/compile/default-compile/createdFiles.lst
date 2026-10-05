@@ -1,0 +1,17 @@
+com/tssa/registration/controller/RegistrationController.class
+com/tssa/registration/model/Coach.class
+com/tssa/registration/model/School.class
+com/tssa/registration/model/Player.class
+com/tssa/registration/service/FileStorageService.class
+com/tssa/registration/model/WorkExperience.class
+com/tssa/registration/service/PresidentService.class
+com/tssa/registration/service/CoachService.class
+com/tssa/registration/repository/PresidentRepository.class
+com/tssa/registration/repository/CoachRepository.class
+com/tssa/registration/model/President.class
+com/tssa/registration/repository/PlayerRepository.class
+com/tssa/registration/controller/CoachController.class
+com/tssa/registration/enums/AgeCategory.class
+com/tssa/registration/TssaRegistrationApplication.class
+com/tssa/registration/controller/PresidentController.class
+com/tssa/registration/service/PlayerService.class

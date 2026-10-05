@@ -1,0 +1,17 @@
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/repository/PresidentRepository.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/controller/PresidentController.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/controller/RegistrationController.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/model/School.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/controller/CoachController.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/service/PresidentService.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/enums/AgeCategory.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/service/PlayerService.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/repository/PlayerRepository.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/model/President.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/service/CoachService.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/model/WorkExperience.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/model/Coach.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/service/FileStorageService.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/model/Player.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/repository/CoachRepository.java
+/Users/katosenyonja/CascadeProjects/TSSAregistration/src/main/java/com/tssa/registration/TssaRegistrationApplication.java

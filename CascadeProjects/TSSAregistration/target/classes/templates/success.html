@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful - TSSA</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-yellow: #ffcc00;
+            --accent-orange: #ff6600;
+            --light-blue: #e6f2ff;
+            --light-yellow: #fff9e6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-yellow) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            max-width: 600px;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            padding: 50px;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-container h1 {
+            color: var(--primary-blue);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .success-container p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--accent-orange);
+            color: var(--white);
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-yellow);
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h1>Registration Successful!</h1>
+        <p th:if="${successMessage}" th:text="${successMessage}">Your registration has been submitted successfully.</p>
+        <p th:unless="${successMessage}">Your registration has been submitted successfully. We will review your application and contact you soon.</p>
+        
+        <div>
+            <a href="/registration" class="btn btn-primary">Register Another Player</a>
+            <a href="/players" class="btn btn-secondary">View All Players</a>
+        </div>
+    </div>
+</body>
+</html>

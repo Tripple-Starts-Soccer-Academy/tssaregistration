@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSSA Player Registration</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-yellow: #ffcc00;
+            --accent-orange: #ff6600;
+            --light-blue: #e6f2ff;
+            --light-yellow: #fff9e6;
+            --white: #ffffff;
+            --gray: #666666;
+            --border-color: #dddddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-yellow) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            padding: 40px;
+        }
+
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--gray);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--accent-orange);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            background: var(--light-yellow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            background: var(--accent-yellow);
+            border-color: var(--primary-blue);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .signature-section {
+            background: var(--light-blue);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .signature-canvas {
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            background: var(--white);
+            cursor: crosshair;
+            width: 100%;
+            height: 150px;
+        }
+
+        .signature-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--accent-orange);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-yellow);
+            color: var(--gray);
+        }
+
+        .btn-clear {
+            background: var(--gray);
+            color: var(--white);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .age-category-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 5px;
+            background: var(--accent-yellow);
+            color: var(--gray);
+        }
+
+        .required {
+            color: var(--accent-orange);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .form-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TSSA Player Registration Portal</h1>
+            <p>Complete your registration to join TSSA</p>
+        </div>
+
+        <div class="form-section">
+            <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+            <form th:action="@{/registration}" th:object="${player}" method="post" enctype="multipart/form-data">
+                
+                <!-- Personal Information -->
+                <h2 class="section-title">Personal Information</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>First Name <span class="required">*</span></label>
+                        <input type="text" th:field="*{firstName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span class="required">*</span></label>
+                        <input type="text" th:field="*{lastName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <input type="date" th:field="*{dateOfBirth}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>NIN (National Identification Number) <span class="required">*</span></label>
+                        <input type="text" th:field="*{nin}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Age Category <span class="required">*</span></label>
+                        <select th:field="*{ageCategory}" required>
+                            <option value="">Select Age Category</option>
+                            <option value="UNDER_10">Under 10</option>
+                            <option value="UNDER_12_14">Under 12-14</option>
+                            <option value="UNDER_15_16">Under 15-16</option>
+                            <option value="UNDER_17">Under 17</option>
+                            <option value="UNDER_18">Under 18</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Position <span class="required">*</span></label>
+                        <input type="text" th:field="*{position}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Locker Number</label>
+                        <input type="number" th:field="*{lockerNumber}">
+                    </div>
+                    <div class="form-group">
+                        <label>Shoe Size</label>
+                        <input type="text" th:field="*{shoeSize}" placeholder="e.g., US 10, EU 43">
+                    </div>
+                    <div class="form-group">
+                        <label>Height</label>
+                        <input type="text" th:field="*{height}" placeholder="e.g., 5'10\" or 178 cm">
+                    </div>
+                    <div class="form-group">
+                        <label>Weight</label>
+                        <input type="text" th:field="*{weight}" placeholder="e.g., 150 lbs or 68 kg">
+                    </div>
+                    <div class="form-group">
+                        <label>Address <span class="required">*</span></label>
+                        <input type="text" th:field="*{address}" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Hobbies</label>
+                    <textarea th:field="*{hobbies}" placeholder="List your hobbies and interests..."></textarea>
+                </div>
+
+                <!-- Document Uploads -->
+                <h2 class="section-title">Document Uploads</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Transcript Document</label>
+                        <div class="file-upload">
+                            <input type="file" id="transcript" name="transcript" accept=".pdf,.doc,.docx">
+                            <label for="transcript" class="file-upload-label">Click to upload transcript</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Passport Photo</label>
+                        <div class="file-upload">
+                            <input type="file" id="passportPhoto" name="passportPhoto" accept="image/*">
+                            <label for="passportPhoto" class="file-upload-label">Click to upload passport photo</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Other Documents</label>
+                        <div class="file-upload">
+                            <input type="file" id="otherDocuments" name="otherDocuments" accept=".pdf,.doc,.docx,.jpg,.png">
+                            <label for="otherDocuments" class="file-upload-label">Click to upload other documents</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signatures -->
+                <h2 class="section-title">Signatures</h2>
+                
+                <div class="signature-section">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 15px;">Player Signature</h3>
+                    <canvas id="playerSignatureCanvas" class="signature-canvas"></canvas>
+                    <input type="hidden" id="playerSignature" name="playerSignature">
+                    <div class="signature-buttons">
+                        <button type="button" class="btn btn-clear" onclick="clearPlayerSignature()">Clear</button>
+                    </div>
+                </div>
+
+                <div class="signature-section">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 15px;">Parent/Guardian Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Parent/Guardian First Name <span class="required">*</span></label>
+                            <input type="text" th:field="*{parentFirstName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Parent/Guardian Last Name <span class="required">*</span></label>
+                            <input type="text" th:field="*{parentLastName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Parent/Guardian Date of Birth <span class="required">*</span></label>
+                            <input type="date" th:field="*{parentDateOfBirth}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>Parent/Guardian Photo</label>
+                        <div class="file-upload">
+                            <input type="file" id="parentPhoto" name="parentPhoto" accept="image/*">
+                            <label for="parentPhoto" class="file-upload-label">Click to upload parent/guardian photo</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label>Consent Form</label>
+                        <div style="background: var(--light-yellow); padding: 20px; border-radius: 8px; border: 2px solid var(--accent-orange); margin-bottom: 15px;">
+                            <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Parent/Guardian Consent Agreement</h4>
+                            <p style="color: #666; line-height: 1.6; margin-bottom: 10px;">
+                                I, as the parent or legal guardian of the player named above, hereby consent to my child's participation in TSSA activities. 
+                                I understand the risks involved in sports activities and agree to release TSSA, its coaches, and officials from any liability 
+                                for injuries that may occur during participation. I authorize TSSA staff to seek medical treatment for my child in case 
+                                of emergency and agree to all rules and regulations of the organization.
+                            </p>
+                            <p style="color: #666; line-height: 1.6;">
+                                I also grant permission for TSSA to use photographs and videos of my child for promotional purposes.
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" id="parentConsentAgreement" name="parentConsentAgreement" required style="width: auto; margin-right: 10px;">
+                                <span>I have read and agree to the consent form above <span class="required">*</span></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary-blue); margin: 20px 0 15px 0;">Parent/Guardian Signature</h3>
+                    <canvas id="parentSignatureCanvas" class="signature-canvas"></canvas>
+                    <input type="hidden" id="parentSignature" name="parentSignature">
+                    <div class="signature-buttons">
+                        <button type="button" class="btn btn-clear" onclick="clearParentSignature()">Clear</button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary" onclick="captureSignatures()">Submit Registration</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Signature Canvas Setup
+        const playerCanvas = document.getElementById('playerSignatureCanvas');
+        const parentCanvas = document.getElementById('parentSignatureCanvas');
+        const playerCtx = playerCanvas.getContext('2d');
+        const parentCtx = parentCanvas.getContext('2d');
+
+        let isDrawing = false;
+        let currentCanvas = null;
+        let currentCtx = null;
+
+        function setupCanvas(canvas, ctx) {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.strokeStyle = '#0066cc';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+        }
+
+        setupCanvas(playerCanvas, playerCtx);
+        setupCanvas(parentCanvas, parentCtx);
+
+        function startDrawing(e, canvas, ctx) {
+            isDrawing = true;
+            currentCanvas = canvas;
+            currentCtx = ctx;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = currentCanvas.getBoundingClientRect();
+            currentCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            currentCtx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        playerCanvas.addEventListener('mousedown', (e) => startDrawing(e, playerCanvas, playerCtx));
+        playerCanvas.addEventListener('mousemove', draw);
+        playerCanvas.addEventListener('mouseup', stopDrawing);
+        playerCanvas.addEventListener('mouseleave', stopDrawing);
+
+        parentCanvas.addEventListener('mousedown', (e) => startDrawing(e, parentCanvas, parentCtx));
+        parentCanvas.addEventListener('mousemove', draw);
+        parentCanvas.addEventListener('mouseup', stopDrawing);
+        parentCanvas.addEventListener('mouseleave', stopDrawing);
+
+        function clearPlayerSignature() {
+            playerCtx.clearRect(0, 0, playerCanvas.width, playerCanvas.height);
+        }
+
+        function clearParentSignature() {
+            parentCtx.clearRect(0, 0, parentCanvas.width, parentCanvas.height);
+        }
+
+        function captureSignatures() {
+            document.getElementById('playerSignature').value = playerCanvas.toDataURL();
+            document.getElementById('parentSignature').value = parentCanvas.toDataURL();
+        }
+
+        // File upload label update
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if (this.files.length > 0) {
+                    label.textContent = this.files[0].name;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

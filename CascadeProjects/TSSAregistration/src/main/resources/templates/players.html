@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Players - TSSA</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-yellow: #ffcc00;
+            --accent-orange: #ff6600;
+            --light-blue: #e6f2ff;
+            --light-yellow: #fff9e6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-yellow) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .player-card {
+            background: var(--light-blue);
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 4px solid var(--accent-orange);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.15);
+        }
+
+        .player-card h3 {
+            color: var(--primary-blue);
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .player-card .info {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .player-card .info strong {
+            color: var(--secondary-blue);
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: #666;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-blue);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state h2 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Registered Players</h1>
+            <div class="nav-links">
+                <a href="/registration">New Registration</a>
+                <a href="/coaches">Coaches</a>
+                <a href="/presidents">Presidents</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div th:if="${players.empty}" class="empty-state">
+                <h2>No Players Registered Yet</h2>
+                <p>Be the first to register a player!</p>
+                <a href="/registration" class="btn btn-primary" style="margin-top: 20px;">Register Now</a>
+            </div>
+
+            <div th:unless="${players.empty}" class="players-grid">
+                <div th:each="player : ${players}" class="player-card">
+                    <h3 th:text="${player.firstName + ' ' + player.lastName}">Player Name</h3>
+                    <div class="info"><strong>NIN:</strong> <span th:text="${player.nin}"></span></div>
+                    <div class="info"><strong>Position:</strong> <span th:text="${player.position}"></span></div>
+                    <div class="info"><strong>Date of Birth:</strong> <span th:text="${player.dateOfBirth}"></span></div>
+                    <div class="info"><strong>Address:</strong> <span th:text="${player.address}"></span></div>
+                    <div class="age-badge" th:text="${player.ageCategory.displayName}">Age Category</div>
+                    <br>
+                    <a th:href="@{/players/{id}(id=${player.id})}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

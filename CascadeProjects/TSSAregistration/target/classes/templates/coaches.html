@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaches - TSSA</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-yellow: #ffcc00;
+            --accent-orange: #ff6600;
+            --light-blue: #e6f2ff;
+            --light-yellow: #fff9e6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-yellow) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .coaches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .coach-card {
+            background: var(--light-blue);
+            border-radius: 10px;
+            padding: 30px;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .coach-card h3 {
+            color: var(--primary-blue);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .coach-card .info {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .coach-card .info strong {
+            color: var(--secondary-blue);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-blue);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TSSA Coaches</h1>
+            <div class="nav-links">
+                <a href="/registration">Registration</a>
+                <a href="/players">Players</a>
+                <a href="/presidents">Presidents</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div th:if="${coaches.empty}" class="empty-state">
+                <h2>No Coaches Listed Yet</h2>
+                <p>Add coaches to the system.</p>
+                <a href="/coaches/add" class="btn btn-primary" style="margin-top: 20px;">Add Coach</a>
+            </div>
+
+            <div th:unless="${coaches.empty}" class="coaches-grid">
+                <div th:each="coach : ${coaches}" class="coach-card">
+                    <h3 th:text="${coach.name}">Coach Name</h3>
+                    <div class="info"><strong>Specialization:</strong> <span th:text="${coach.specialization != null ? coach.specialization : 'Not specified'}"></span></div>
+                    <div class="info"><strong>Contact:</strong> <span th:text="${coach.contactNumber != null ? coach.contactNumber : 'Not specified'}"></span></div>
+                    <div class="info"><strong>Email:</strong> <span th:text="${coach.email != null ? coach.email : 'Not specified'}"></span></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="/coaches/add" class="btn btn-primary">Add New Coach</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

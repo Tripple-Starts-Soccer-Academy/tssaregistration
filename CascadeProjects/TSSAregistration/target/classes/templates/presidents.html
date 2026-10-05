@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>President Hierarchy - TSSA</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-yellow: #ffcc00;
+            --accent-orange: #ff6600;
+            --light-blue: #e6f2ff;
+            --light-yellow: #fff9e6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-yellow) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .hierarchy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .president-card {
+            background: var(--light-blue);
+            border-radius: 10px;
+            padding: 30px;
+            border-left: 4px solid var(--accent-orange);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hierarchy-level {
+            background: var(--accent-yellow);
+            color: #666;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .president-info h3 {
+            color: var(--primary-blue);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .president-info .info {
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .president-info .info strong {
+            color: var(--secondary-blue);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-blue);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>President Hierarchy</h1>
+            <div class="nav-links">
+                <a href="/registration">Registration</a>
+                <a href="/players">Players</a>
+                <a href="/coaches">Coaches</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div th:if="${presidents.empty}" class="empty-state">
+                <h2>No Presidents Listed Yet</h2>
+                <p>Add presidents to the hierarchy system.</p>
+                <a href="/presidents/add" class="btn btn-primary" style="margin-top: 20px;">Add President</a>
+            </div>
+
+            <div th:unless="${presidents.empty}" class="hierarchy-list">
+                <div th:each="president : ${presidents}" class="president-card">
+                    <div class="hierarchy-level" th:text="${president.hierarchyLevel != null ? president.hierarchyLevel : 'N/A'}">1</div>
+                    <div class="president-info">
+                        <h3 th:text="${president.name}">President Name</h3>
+                        <div class="info"><strong>Title:</strong> <span th:text="${president.title != null ? president.title : 'Not specified'}"></span></div>
+                        <div class="info"><strong>Contact:</strong> <span th:text="${president.contactNumber != null ? president.contactNumber : 'Not specified'}"></span></div>
+                        <div class="info"><strong>Email:</strong> <span th:text="${president.email != null ? president.email : 'Not specified'}"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="/presidents/add" class="btn btn-primary">Add New President</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

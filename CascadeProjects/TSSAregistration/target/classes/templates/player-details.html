@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Details - TSSA</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #004499;
+            --accent-yellow: #ffcc00;
+            --accent-orange: #ff6600;
+            --light-blue: #e6f2ff;
+            --light-yellow: #fff9e6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-yellow) 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .player-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .player-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 30px;
+            font-size: 3em;
+            color: var(--primary-blue);
+            border: 4px solid var(--accent-yellow);
+        }
+
+        .player-info h2 {
+            color: var(--primary-blue);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: #666;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .detail-section {
+            background: var(--light-blue);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .detail-section h3 {
+            color: var(--primary-blue);
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+        }
+
+        .detail-item label {
+            display: block;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .detail-item span {
+            color: var(--secondary-blue);
+            font-size: 1.1em;
+        }
+
+        .signature-display {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+        }
+
+        .signature-display img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-blue);
+        }
+
+        .btn-secondary {
+            background: var(--accent-orange);
+            color: var(--white);
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-yellow);
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Player Details</h1>
+            <div class="nav-links">
+                <a href="/players">Back to Players</a>
+                <a href="/registration">New Registration</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="player-header">
+                <div class="player-photo">
+                    <span th:if="${player.passportPhoto != null}">
+                        <img th:src="'data:image/jpeg;base64,' + ${player.passportPhoto}" 
+                             style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    </span>
+                    <span th:unless="${player.passportPhoto}">👤</span>
+                </div>
+                <div class="player-info">
+                    <h2 th:text="${player.firstName + ' ' + player.lastName}">Player Name</h2>
+                    <span class="age-badge" th:text="${player.ageCategory.displayName}">Age Category</span>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-section">
+                    <h3>Personal Information</h3>
+                    <div class="detail-item">
+                        <label>NIN</label>
+                        <span th:text="${player.nin}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Date of Birth</label>
+                        <span th:text="${player.dateOfBirth}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Position</label>
+                        <span th:text="${player.position}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Locker Number</label>
+                        <span th:text="${player.lockerNumber != null ? player.lockerNumber : 'Not assigned'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Shoe Size</label>
+                        <span th:text="${player.shoeSize != null ? player.shoeSize : 'Not specified'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Height</label>
+                        <span th:text="${player.height != null ? player.height : 'Not specified'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Weight</label>
+                        <span th:text="${player.weight != null ? player.weight : 'Not specified'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Address</label>
+                        <span th:text="${player.address}"></span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Additional Information</h3>
+                    <div class="detail-item">
+                        <label>Hobbies</label>
+                        <span th:text="${player.hobbies != null ? player.hobbies : 'Not specified'}"></span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Parent/Guardian Information</h3>
+                    <div class="detail-item">
+                        <label>Parent/Guardian Name</label>
+                        <span th:text="${player.parentFirstName != null && player.parentLastName != null ? player.parentFirstName + ' ' + player.parentLastName : 'Not specified'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Parent/Guardian Date of Birth</label>
+                        <span th:text="${player.parentDateOfBirth != null ? player.parentDateOfBirth : 'Not specified'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Parent/Guardian Photo</label>
+                        <div class="signature-display" th:if="${player.parentPhoto != null}">
+                            <img th:src="'data:image/jpeg;base64,' + ${player.parentPhoto}" alt="Parent Photo" style="max-width: 200px; border-radius: 8px;">
+                        </div>
+                        <span th:unless="${player.parentPhoto}">Not uploaded</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Consent Agreement</label>
+                        <span th:text="${player.parentConsentAgreement != null ? 'Agreed' : 'Not agreed'}" 
+                              th:style="${player.parentConsentAgreement != null ? 'color: #28a745; font-weight: 600;' : 'color: #dc3545;'}"></span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Signatures</h3>
+                    <div class="detail-item">
+                        <label>Player Signature</label>
+                        <div class="signature-display" th:if="${player.playerSignature != null}">
+                            <img th:src="${player.playerSignature}" alt="Player Signature">
+                        </div>
+                        <span th:unless="${player.playerSignature}">Not provided</span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Parent Signature</label>
+                        <div class="signature-display" th:if="${player.parentSignature != null}">
+                            <img th:src="${player.parentSignature}" alt="Parent Signature">
+                        </div>
+                        <span th:unless="${player.parentSignature}">Not provided</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Documents</h3>
+                    <div class="detail-item">
+                        <label>Transcript</label>
+                        <span th:text="${player.transcriptDocument != null ? 'Uploaded' : 'Not uploaded'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Passport Photo</label>
+                        <span th:text="${player.passportPhoto != null ? 'Uploaded' : 'Not uploaded'}"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Other Documents</label>
+                        <span th:text="${player.otherDocuments != null ? 'Uploaded' : 'Not uploaded'}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="/players" class="btn btn-primary">Back to Players List</a>
+                <a href="/registration" class="btn btn-secondary">Register Another Player</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
